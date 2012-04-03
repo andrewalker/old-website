@@ -1,14 +1,20 @@
 ---
 layout: page
-title: Proposal - Rework Catalyst component loading system
-header: Proposal - Rework Catalyst component loading system
+title: Proposal - Rework Catalyst component setup code
+header: Proposal - Rework Catalyst component setup code
 ---
 
-André Walker &lt;<em>my email address</em>&gt;
+<p>
+André Walker &lt;<em>my email address</em>&gt;<br/>
 Google ID: andrewalker
+</p>
+
 <h3>Rework Catalyst component setup code</h3>
 <h4>Abstract</h4>
+<p>
 This project aims to remove the current component loading mechanism in Catalyst, which is very poor and simple, and replace it using Bread::Board, an IoC (Inversion of Control) framework providing a more customizable setup of the components. This will allow more control of how each component is instantiated and loaded, while also simplifying Catalyst code.
+</p>
+
 <h4>Benefits to the Perl/Open Source Community</h4>
 <ul>
     <li>Users of the Catalyst framework, that is, application developers, will be able to define how components are instantiated, and their lifetime. That would remove the need for Catalyst::Component::InstancePerContext and Catalyst::Model::Adaptor, for example. Also, it would be possible to define components without the actual file existing, as implemented in CatalystX::DynamicComponent::ModelsFromConfig.</li>
@@ -25,29 +31,53 @@ This project aims to remove the current component loading mechanism in Catalyst,
     <li>a comprehensive test suite, using the new features and making sure the back compatibility was maintained, both on ConfigLoader and on the framework extension API.</li>
 </ul>
 <h4>Project Details</h4>
+<p>
 Inversion of Control (IoC) is a programming principle in which the control of a given application flow is handed over to a framework. That way, the application doesn't have to deal with how each component is instantiated, or the order of creation.
+</p>
 
+<p>
 In Catalyst, there is a simple mechanism for component loading, so that the controllers, models and views are created by the Catalyst framework and accessible by the context (usually referred as $c or $ctx) in $c-&gt;model, $c-&gt;view and $c-&gt;controller.
+</p>
 
+<p>
 The problem is that the instantiation and loading of these components is very rigid, and does not allow much customization. Configuration is also very coupled to Catalyst; it's hard to reuse it outside of Catalyst.
+</p>
 
+<p>
 For example, to make a model in Catalyst, the developer must create it in the MyApp::Model::* namespace, and make it inherit from Catalyst::Model, so that it is specific to Catalyst. Otherwise, it won't be instantiated and available in the context object. To overcome it, and have a model that can be reused, and tested outside of Catalyst, it's necessary for the model to inherit from Catalyst::Model::Adaptor. It loads the generic model, and ties it to Catalyst. To make the object last for only one request, the model has to inherit from Catalyst::Model::Factory::PerRequest. And to make it build a new instance at each call to $ctx-&gt;model(), Catalyst::Model::Factory. If the user want's his controllers to last for only one request, there's also a module enabling that, Catalyst::Component::InstancePerRequest.
+</p>
 
+<p>
 So, in order to change the default behavior of the component loading mechanism, many hacks had to be created. The setup of the components is too inflexible, and requires a lot of work to do more than the default.
+</p>
 
+<p>
 Bread::Board is an IoC framework created to solve this kind of issue. It handles the instantiation and configuring of each object, and the order it has to be created. It is a much more powerful implementation than the current loading mechanism in Catalyst, and it would allow a much more extended configuration of each component. Having a separate framework handling the IoC part would make Catalyst code simpler, and would make it much easier to implement new features in the IoC framework, as it is separated from the Catalyst specific bits.
+</p>
 
+<p>
 Bread::Board is also focused in Dependency Injection. So each component can ask for what it needs, and Bread::Board just passes it over. Configuration becomes much easier, because it's no longer necessary to define a common object or data in multiple places; it can be just defined once, and then be called as dependencies.
+</p>
 
+<p>
 The end result would be that the application code would be more customizable, and less tightly coupled to Catalyst. It could be easily reused for a crontab script, or ported to another kind of application, because the Catalyst specifics would be just a container wiring the components using Bread::Board.
+</p>
 
+<p>
 Also, the IoC framework would render the modules mentioned above unnecessary. It will be possible to tie a component to Catalyst just by defining it in the container. The lifetime of the objects could be easily defined in the container too. The whole process would be a lot more customizable.
+</p>
 
+<p>
 So the first step would be to change Catalyst::Plugin::ConfigLoader to use Bread::Board. Actually this has already been done, as this project has been tried on a previous Google Summer of Code by arcanez (Justin Hunter). I'll try and get the most use of what has been done. Then, ConfigLoader would be merged into core, and Catalyst would be reworked to load it's components using Bread::Board. Finally, an API would be created to extend the default container in Catalyst, so that each application could have a custom container, defining how their components will be loaded, changing the default lifetime, assign custom configuration to components, etc.
+</p>
 
+<p>
 Obviously, tests would be created in each part of the process, for every new feature, and every change in the code.
+</p>
 <h4>Project Schedule</h4>
+<p>
 April 25 to May 23: Study Bread::Board more thoroughly, and start finding my way in Catalyst source code. Understand better how components are loaded, and how the current Catalyst component setup works, and how it should work using Bread::Board.
+</p>
 
 Week of...
 <ul>
@@ -67,18 +97,34 @@ Week of...
 </ul>
 
 <h4>References and Likely Mentors</h4>
+<p>
 I talked to dhoss at first, in February, asking for suggestions on what to study and focus, as I hadn't picked a project yet. Later on, when trying to understand better the need for this project, t0m and rafl, among others on IRC, like mst, arcanez and joel, were very helpful, pointing me to the right directions and explaining how it should be done. Lastly, edenc showed interest in the project, and offered to mentor me.
+</p>
 <h4>License</h4>
+<p>
 All code will be released in the same terms as Perl itself (Artistic + GPL)
+</p>
 <h4>Bio</h4>
+<p>
 I'm a Brazilian student, 19 years old. I took a three year IT course, focused on programming, during high-school. They didn't teach Perl, but in my final project, during the last year in that school, I created a photo sharing website using CGI::Application, DBIx::Class and Template Toolkit.
+</p>
 
+<p>
 I wanted to take that course because I had already been experimenting with programming, and I was really liking it. I had created some web pages, first in static HTML, then PHP, and finally Perl. I read Beginning Perl, by Simon Cozens, when I was 13, and since then, it has been by far my favorite language.
+</p>
 
+<p>
 I've also been working for the last year and a half (roughly), using mostly PHP, but also Perl and Catalyst whenever possible, making websites and internal systems for companies. In January I was accepted in a university course, in Computer Science.
+</p>
 
+<p>
 I haven't contributed to any open source project yet, this will be my first time. Despite not being very experienced, I believe I can deliver this project because it will be my chance to work with something I actually like, and to give something back to the Perl community.
+</p>
 
+<p>
 My tools are the terminal windows, a browser, vim (preferably with perl-support plugin), and git.
+</p>
 <h4>Eligibility</h4>
+<p>
 I am an enrolled student in a well-known Brazilian university, and I can provide paperwork upon request.
+</p>
