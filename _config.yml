@@ -1,8 +1,8 @@
 # This is the default format.
 # For more see: https://github.com/mojombo/jekyll/wiki/Permalinks
-permalink: /:categories/:title
+permalink: /:year/:month/:title
 
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
+exclude: [".rvmrc", ".rbenv-version", "README", "README.md", "Rakefile", "changelog.md"]
 auto: true
 pygments: true
 
@@ -97,11 +97,11 @@ JB :
   # Set 'provider' to false to turn analytics off globally.
   #
   analytics:
-    provider: false
+    provider: getclicky
     google:
         tracking_id : 'UA-123-12'
     getclicky:
-      site_id:
+      site_id: 66564894
     mixpanel:
         token: '_MIXPANEL_TOKEN_'
 
