@@ -1,0 +1,21 @@
+--- 
+wordpress_id: 38
+layout: post
+date: 2011-04-25 23:20:19 -03:00
+wordpress_url: http://perl.andrewalker.net/?p=38
+title: Accepted!
+---
+So, today the accepted projects were <a href="http://www.google-melange.com/gsoc/projects/list/google/gsoc2011">announced</a>, and I'm in =D.
+
+So far, I have focused in writing a good proposal, and contacting the right people to understand how to do this, and get prepared for the summer of code. From now on, I'll reserve some time make blog posts to let people know what exactly I'm doing. And actually, right now, I'll simply celebrate the fact that I was accepted :)
+
+In following posts, I will describe:
+<ol>
+	<li>What exactly <i>is</i> the Summer of Code</li>
+        <li>What is the project that I'll be developing, <i>in simple words</i></li>
+	<li>What are the plans to develop it (how I'll do it, the schedule, etc)</li>
+</ol>
+
+Obviously, these are most introductory posts, so that my Brazillian friends can know what it's all about. After that, I'll probably post more technical things that will be useful only to the Perl community. But feel free to follow it if your interested! All support is welcome =)
+
+For today, it's more than enough. Keep tuned!
