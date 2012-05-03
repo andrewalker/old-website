@@ -1,8 +1,6 @@
---- 
-wordpress_id: 44
+---
 layout: post
 date: 2011-04-28 21:49:12 -03:00
-wordpress_url: http://perl.andrewalker.net/?p=44
 title: Google Summer of Code?
 ---
 So, you have heard something about Google Summer of Code and you are wondering what the heck is that. Perhaps you have seen some tweets by me that got you thinking, or you heard somewhere else, and ended up in my blog.

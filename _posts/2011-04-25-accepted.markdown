@@ -1,8 +1,6 @@
---- 
-wordpress_id: 38
+---
 layout: post
 date: 2011-04-25 23:20:19 -03:00
-wordpress_url: http://perl.andrewalker.net/?p=38
 title: Accepted!
 ---
 So, today the accepted projects were <a href="http://www.google-melange.com/gsoc/projects/list/google/gsoc2011">announced</a>, and I'm in =D.
